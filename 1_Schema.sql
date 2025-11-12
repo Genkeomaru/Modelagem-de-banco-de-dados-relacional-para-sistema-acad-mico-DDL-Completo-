@@ -1,10 +1,10 @@
 Table Aluno {
   id_Aluno int [pk]
   Nome_completo text
-  Data_de_Nascimento varchar (10)
-  RG varchar (20)
-  CPF varchar (14)
-  Telefone varchar (11)
+  Data_de_Nascimento date
+  RG char(20)
+  CPF char(11)
+  Telefone char(11)
   Email varchar
   CEP varchar
   Endereço varchar
@@ -16,8 +16,7 @@ Table Matricula {
   id_Matricula int [pk]
   id_Aluno int
   id_Curso int
-  Mês_matricula month
-  Ano_matricula year
+  Data_Matricula date
 }
 
 Table Curso {
@@ -30,7 +29,7 @@ Table Curso {
 
 Table Faculdade {
   id_Unidade int [pk]
-  Nome int
+  Nome text
   CNPJ varchar
   Endereço varchar
   Cidade varchar
@@ -43,17 +42,16 @@ Table Materias {
   Sala int
   id_professor int
   id_Curso int
-  id_Matricula int
 }
 
 Table Professores {
   id_Professor int [pk]
   Nome_completo text
-  Data_de_Nascimento varchar (10)
-  Telefone varchar (11)
+  Data_de_Nascimento date
+  Telefone char(11)
   Email varchar
-  RG varchar (20)
-  CPF varchar (14)
+  RG char(20)
+  CPF char(11)
   Tipo_de_Aula int
   Formação int
   CEP varchar
@@ -64,7 +62,6 @@ Table Professores {
 
 Table Nota {
   id_materia int
-  id_Professor int
   id_Matricula int
   Nota decimal (10)
 }
@@ -82,10 +79,6 @@ Ref {
 }
 
 Ref {
-  Matricula.id_Matricula > Materias.id_Matricula
-}
-
-Ref {
   Curso.id_Curso > Materias.id_Curso
 }
 
@@ -95,10 +88,6 @@ Ref {
 
 Ref {
   Materias.id_materia > Nota.id_materia
-}
-
-Ref {
-  Professores.id_Professor > Nota.id_Professor
 }
 
 Ref {
