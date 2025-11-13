@@ -1,4 +1,8 @@
--- 1. Tabela Faculdade (Não depende de ninguém)
+-- ============================================================
+-- DDL - CRIAÇÃO DA ESTRUTURA DO BANCO DE DADOS
+-- ============================================================
+
+-- 1. Tabela Faculdade
 CREATE TABLE Faculdade (
     id_Unidade INT PRIMARY KEY,
     Nome VARCHAR(255),
@@ -8,7 +12,7 @@ CREATE TABLE Faculdade (
     Estado CHAR(2)
 );
 
--- 2. Tabela Professores (Não depende de ninguém)
+-- 2. Tabela Professores
 CREATE TABLE Professores (
     id_Professor INT PRIMARY KEY,
     Nome_completo VARCHAR(255),
@@ -25,7 +29,7 @@ CREATE TABLE Professores (
     Estado CHAR(2)
 );
 
--- 3. Tabela Aluno (Não depende de ninguém)
+-- 3. Tabela Aluno
 CREATE TABLE Aluno (
     id_Aluno INT PRIMARY KEY,
     Nome_completo VARCHAR(255),
@@ -40,7 +44,7 @@ CREATE TABLE Aluno (
     Estado CHAR(2)
 );
 
--- 4. Tabela Curso (Depende da Faculdade)
+-- 4. Tabela Curso
 CREATE TABLE Curso (
     id_Curso INT PRIMARY KEY,
     Nome VARCHAR(255),
@@ -50,7 +54,7 @@ CREATE TABLE Curso (
     FOREIGN KEY (id_Unidade) REFERENCES Faculdade(id_Unidade)
 );
 
--- 5. Tabela Materias (Depende do Curso)
+-- 5. Tabela Materias
 CREATE TABLE Materias (
     id_materia INT PRIMARY KEY,
     Nome VARCHAR(255),
@@ -58,7 +62,7 @@ CREATE TABLE Materias (
     FOREIGN KEY (id_Curso) REFERENCES Curso(id_Curso)
 );
 
--- 6. Tabela Turma (Depende de Materia e Professor)
+-- 6. Tabela Turma
 CREATE TABLE Turma (
     id_Turma INT PRIMARY KEY,
     id_materia INT,
@@ -69,7 +73,7 @@ CREATE TABLE Turma (
     FOREIGN KEY (id_professor) REFERENCES Professores(id_Professor)
 );
 
--- 7. Tabela Matricula (Liga Aluno e Curso)
+-- 7. Tabela Matricula
 CREATE TABLE Matricula (
     id_Matricula INT PRIMARY KEY,
     id_Aluno INT,
@@ -79,49 +83,41 @@ CREATE TABLE Matricula (
     FOREIGN KEY (id_Curso) REFERENCES Curso(id_Curso)
 );
 
--- 8. Tabela Nota (Depende da Turma e da Matricula)
+-- 8. Tabela Nota
 CREATE TABLE Nota (
     id_Turma INT,
     id_Matricula INT,
-    Nota DECIMAL(5,2), -- Ex: 10.00
+    Nota DECIMAL(5,2),
     FOREIGN KEY (id_Turma) REFERENCES Turma(id_Turma),
     FOREIGN KEY (id_Matricula) REFERENCES Matricula(id_Matricula)
 );
 
 -- ============================================================
--- POPULANDO O BANCO DE DADOS (DML - Data Manipulation Language)
+-- DML - POPULANDO DADOS DE TESTE
 -- ============================================================
 
--- 1. Criando a Faculdade
 INSERT INTO Faculdade (id_Unidade, Nome, CNPJ, Endereco, Cidade, Estado) VALUES
 (1, 'Universidade Tech & Business', '12345678000199', 'Av. Paulista, 1000', 'São Paulo', 'SP');
 
--- 2. Cadastrando um Professor
 INSERT INTO Professores (id_Professor, Nome_completo, Data_de_Nascimento, Email, Tipo_de_Aula, Formacao, Cidade, Estado) VALUES
 (100, 'Carlos Sênior', '1980-05-20', 'carlos.prof@faculdade.com', 1, 3, 'São Paulo', 'SP');
 
--- 3. Cadastrando um Curso (ADS)
 INSERT INTO Curso (id_Curso, Nome, Carga_horaria, Previsao_de_Conclusao, id_Unidade) VALUES
 (10, 'Análise e Desenvolvimento de Sistemas', 2800, 2025, 1);
 
--- 4. Cadastrando as Matérias
 INSERT INTO Materias (id_materia, Nome, id_Curso) VALUES
 (501, 'Algoritmos e Lógica', 10),
 (502, 'Banco de Dados Relacional', 10),
 (503, 'Engenharia de Software', 10);
 
--- 5. Cadastrando VOCÊ como Aluno (Easter Egg no seu portfólio)
 INSERT INTO Aluno (id_Aluno, Nome_completo, Email, Cidade, Estado) VALUES
 (202401, 'Guilherme Rodrigues', 'guilherme.dev@email.com', 'São Roque', 'SP');
 
--- 6. Matriculando o Aluno no Curso
 INSERT INTO Matricula (id_Matricula, id_Aluno, id_Curso, Data_Matricula) VALUES
 (999, 202401, 10, '2024-01-15');
 
--- 7. Criando uma Turma de Banco de Dados
 INSERT INTO Turma (id_Turma, id_materia, id_professor, Ano_semestre, Sala) VALUES
 (80, 502, 100, '2024-1', 'Lab 03');
 
--- 8. Lançando uma Nota 10 para o aluno (Lógica de Negócio: Aprovação)
 INSERT INTO Nota (id_Turma, id_Matricula, Nota) VALUES
 (80, 999, 10.00);
