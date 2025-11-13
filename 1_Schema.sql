@@ -87,3 +87,41 @@ CREATE TABLE Nota (
     FOREIGN KEY (id_Turma) REFERENCES Turma(id_Turma),
     FOREIGN KEY (id_Matricula) REFERENCES Matricula(id_Matricula)
 );
+
+-- ============================================================
+-- POPULANDO O BANCO DE DADOS (DML - Data Manipulation Language)
+-- ============================================================
+
+-- 1. Criando a Faculdade
+INSERT INTO Faculdade (id_Unidade, Nome, CNPJ, Endereco, Cidade, Estado) VALUES
+(1, 'Universidade Tech & Business', '12345678000199', 'Av. Paulista, 1000', 'São Paulo', 'SP');
+
+-- 2. Cadastrando um Professor
+INSERT INTO Professores (id_Professor, Nome_completo, Data_de_Nascimento, Email, Tipo_de_Aula, Formacao, Cidade, Estado) VALUES
+(100, 'Carlos Sênior', '1980-05-20', 'carlos.prof@faculdade.com', 1, 3, 'São Paulo', 'SP');
+
+-- 3. Cadastrando um Curso (ADS)
+INSERT INTO Curso (id_Curso, Nome, Carga_horaria, Previsao_de_Conclusao, id_Unidade) VALUES
+(10, 'Análise e Desenvolvimento de Sistemas', 2800, 2025, 1);
+
+-- 4. Cadastrando as Matérias
+INSERT INTO Materias (id_materia, Nome, id_Curso) VALUES
+(501, 'Algoritmos e Lógica', 10),
+(502, 'Banco de Dados Relacional', 10),
+(503, 'Engenharia de Software', 10);
+
+-- 5. Cadastrando VOCÊ como Aluno (Easter Egg no seu portfólio)
+INSERT INTO Aluno (id_Aluno, Nome_completo, Email, Cidade, Estado) VALUES
+(202401, 'Guilherme Rodrigues', 'guilherme.dev@email.com', 'São Roque', 'SP');
+
+-- 6. Matriculando o Aluno no Curso
+INSERT INTO Matricula (id_Matricula, id_Aluno, id_Curso, Data_Matricula) VALUES
+(999, 202401, 10, '2024-01-15');
+
+-- 7. Criando uma Turma de Banco de Dados
+INSERT INTO Turma (id_Turma, id_materia, id_professor, Ano_semestre, Sala) VALUES
+(80, 502, 100, '2024-1', 'Lab 03');
+
+-- 8. Lançando uma Nota 10 para o aluno (Lógica de Negócio: Aprovação)
+INSERT INTO Nota (id_Turma, id_Matricula, Nota) VALUES
+(80, 999, 10.00);
